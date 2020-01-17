@@ -28,5 +28,11 @@ def products(request):
     return render(request, 'accounts/products.html', {'products': products})
 
 
-def castomer(request):
-    return render(request, 'accounts/castomer.html')
+def castomer(request, pk_test):
+    customer = Customer.objects.get(id=pk_test)
+    orders = customer.order_set.all()
+    orders_count = orders.count()
+    context = {'customer': customer,
+               'orders': orders,
+               'orders_count': orders_count}
+    return render(request, 'accounts/castomer.html', context)
